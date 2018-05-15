@@ -11,7 +11,7 @@ class FormWidget extends React.Component {
     }
 
     render() {
-        if (this.props.static) {
+        if (this.props.readOnly) {
             return this.getStatic();
         } else {
             return this.getNonStatic();

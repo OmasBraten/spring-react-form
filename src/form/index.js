@@ -1,14 +1,15 @@
 import React from 'react';
 import Renderer from "./theme/Renderer";
-import {SchemaFormProps, SchemaFormState} from "./type/SchemaForm"
+import {Props, State} from "./type/SchemaForm"
 import Ajv from 'ajv'
-import Basic from "./theme/basic";
+import {BasicTheme} from "./theme";
 
-class SchemaForm extends React.Component<SchemaFormProps, SchemaFormState> {
+class SchemaForm extends React.Component<Props, State> {
     static defaultProps = {
         readOnly: false,
         formData: {},
-        theme: Basic
+        theme: BasicTheme,
+        mappings: {}
     };
     state = {
         validSchema: true,
@@ -74,12 +75,11 @@ class SchemaForm extends React.Component<SchemaFormProps, SchemaFormState> {
     }
 
     render() {
-        const {schema, readOnly, formData, onSubmit} = this.props;
-        console.log(schema);
+        const {schema, readOnly, formData, onSubmit, onChange} = this.props;
         if (!this.state.validSchema)
             return (<p>The scheme is not valid!</p>);
         return (
-            this.renderer.render(schema, readOnly, formData, onSubmit)
+            this.renderer.render(schema, readOnly, formData, onSubmit, onChange)
         )
     }
 }

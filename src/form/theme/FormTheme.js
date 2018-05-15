@@ -1,5 +1,5 @@
 import React from 'react';
-import TypeMapping from "./TypeMapping";
+import FormWidget from "./FormWidget";
 
 class FormTheme {
     //TODO: return types
@@ -7,7 +7,7 @@ class FormTheme {
         throw new NotImplementedException("form container not implemented")
     }
 
-    static textField() {
+    static textField(): FormWidget {
         throw new NotImplementedException("Text field not implemented")
     }
 

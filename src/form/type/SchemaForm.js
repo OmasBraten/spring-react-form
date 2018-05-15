@@ -1,7 +1,7 @@
 import FormTheme from "../theme/FormTheme";
 import TypeMapping from "../theme/TypeMapping";
 
-export type SchemaFormProps = {
+export type Props = {
     schema: any,
     readOnly?: boolean,
     formData: any,
@@ -11,6 +11,6 @@ export type SchemaFormProps = {
     mappings?: TypeMapping
 };
 
-export type SchemaFormState = {
+export type State = {
     validSchema: boolean
 };
