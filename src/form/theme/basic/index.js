@@ -1,10 +1,24 @@
 import React from 'react';
 import FormTheme from "../FormTheme";
+import {BaseInputField, FormContainer, ObjectField} from "./component";
+import FormWidget from "../FormWidget";
 
-class Basic extends FormTheme {
+class _BasicTheme extends FormTheme {
     static formContainer() {
-        return "form"
+        return FormContainer
+    }
+
+    static objectField() {
+        return ObjectField
+    }
+
+    static textField(): FormWidget {
+        return BaseInputField
+    }
+
+    static numberField(): FormWidget {
+        return BaseInputField
     }
 }
 
-export default Basic;
+export default _BasicTheme;

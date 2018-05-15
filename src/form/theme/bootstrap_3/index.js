@@ -1,10 +1,10 @@
 import React from 'react';
 import FormTheme from "../FormTheme";
 
-class Bootstrap extends FormTheme {
+class _Bootstrap3Theme extends FormTheme {
     static textField() {
         console.log("asd");
     }
 }
 
-export default Bootstrap;
+export default _Bootstrap3Theme;
