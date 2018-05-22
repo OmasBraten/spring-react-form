@@ -1,54 +1,63 @@
 import React from 'react';
 import FormWidget from "./FormWidget";
+import {FieldProps, FormContainerProps} from "../type/FormTheme";
 
 class FormTheme {
-    //TODO: return types
-    static formContainer() {
+    //TODO: types
+    static formContainer(props: FormContainerProps) {
         throw new NotImplementedException("form container not implemented")
     }
 
-    static textField(): FormWidget {
-        throw new NotImplementedException("Text field not implemented")
-    }
-
-    static arrayField() {
-        throw new NotImplementedException("Array field not implemented")
-    }
-
-    static objectField() {
+    static objectField(props) {
         throw new NotImplementedException("Object field not implemented")
     }
 
-    static oneOfField() {
+    static arrayField(props) {
+        throw new NotImplementedException("Array field not implemented")
+    }
+
+    static textField(props: FieldProps): FormWidget {
+        throw new NotImplementedException("Text field not implemented")
+    }
+
+    static oneOfField(): FormWidget {
         throw new NotImplementedException("One of field not implemented")
     }
 
-    static numberField() {
+    static numberField(props: FieldProps): FormWidget {
         throw new NotImplementedException("Number field not implemented")
     }
 
-    static textAreaField() {
+    static textAreaField(props: FieldProps): FormWidget {
         throw new NotImplementedException("Text area field not implemented")
     }
 
-    static selectionField() {
+    static selectionField(props: FieldProps): FormWidget {
         throw new NotImplementedException("Selection field not implemented")
     }
 
-    static checkField() {
+    static checkField(props: FieldProps): FormWidget {
         throw new NotImplementedException("Check field not implemented")
     }
 
-    static dateField() {
+    static dateField(props: FieldProps): FormWidget {
         throw new NotImplementedException("Date field not implemented")
     }
 
-    static dateTimeField() {
+    static dateTimeField(props: FieldProps): FormWidget {
         throw new NotImplementedException("Date time field not implemented")
     }
 
-    static timeField() {
+    static timeField(props: FieldProps): FormWidget {
         throw new NotImplementedException("Time field not implemented")
+    }
+
+    static emailField(props: FieldProps): FormWidget {
+        throw new NotImplementedException("Email field not implemented")
+    }
+
+    static uriField(props: FieldProps): FormWidget {
+        throw new NotImplementedException("URI field not implemented")
     }
 }
 

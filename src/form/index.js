@@ -75,6 +75,7 @@ class SchemaForm extends React.Component<Props, State> {
     }
 
     render() {
+        //TODO: add prop if in static mode empty fields are rendered or not also for readonly fields in non editing mode
         const {schema, readOnly, formData, onSubmit, onChange} = this.props;
         if (!this.state.validSchema)
             return (<p>The scheme is not valid!</p>);

@@ -6,6 +6,7 @@ function _FormContainer(props: FormContainerProps) {
     return (
         <form onSubmit={props.onSubmit}>
             {props.children}
+            <input type="submit" value="Submit"/>
         </form>
     )
 }

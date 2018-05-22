@@ -1,9 +1,9 @@
 import React from 'react';
 import FormWidget from "../../FormWidget";
-import type {BaseInputFieldProps} from "../../../type/FormTheme";
+import type {SelectionFieldProps} from "../../../type/FormTheme";
 
-class _BaseInputField extends FormWidget {
-    constructor(props: BaseInputFieldProps) {
+class _SelectionField extends FormWidget {
+    constructor(props: SelectionFieldProps) {
         super(props);
     }
 
@@ -22,13 +22,11 @@ class _BaseInputField extends FormWidget {
             <React.Fragment key={this.props.fieldContext}>
                 <label htmlFor={this.props.fieldContext}>{this.props.label}</label>
                 <br/>
-                <input required={this.props.required}
-                       name={this.props.label}
-                       id={this.props.fieldContext}
-                       type={this.props.type}
-                       placeholder={this.props.defaultValue}
-                       value={this.props.value}
-                />
+                <select name={this.props.fieldContext}>
+                    {this.props.options.map((option, idx) =>
+                        <option key={`${this.props.fieldContext}.${option}`} value={option}>{option}</option>
+                    )}
+                </select>
                 <br/>
                 {this.props.description && (
                     <React.Fragment>
@@ -41,4 +39,4 @@ class _BaseInputField extends FormWidget {
     }
 }
 
-export default _BaseInputField;
+export default _SelectionField;

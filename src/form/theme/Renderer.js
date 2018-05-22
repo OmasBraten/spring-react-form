@@ -17,10 +17,12 @@ class Renderer {
             'boolean': theme.checkField,
             'choice': theme.selectionField,
             'date': theme.dateField,
-            'datetime': theme.dateTimeField,
+            'date-time': theme.dateTimeField,
             'time': theme.timeField,
             'oneOf': theme.oneOfField,
-            'form': theme.formContainer
+            'form': theme.formContainer,
+            'email': theme.emailField,
+            'uri': theme.uriField
         };
 
         Object.values(mappings).forEach(mapping => this.mappings[mapping.type] = mapping.widget);
@@ -32,43 +34,78 @@ class Renderer {
            onSubmit: func,
            onChange: func): React.Element {
         return React.createElement(
-            this.mappings['form'](),
+            this.mappings['form'],
             {onSubmit: onSubmit},
-            this.renderField(schema, null, readOnly, 'form')
+            this.renderField(schema, '', readOnly, '')
         );
     }
 
-    renderField(schema: object,
+    renderField(schema: any,
                 fieldName: string,
                 readOnly: boolean,
-                context: string): ReactElement {
-        const widget = this.mappings[schema.type];
-
+                context: string,
+                required: boolean): ReactElement {
+        const widget = this.getWidget(schema);
         if (!widget) {
             console.error(`No widget for type: ${schema.type}`);
             return;
         }
 
+        const fieldLabel = schema.title ? schema.title : fieldName;
+        const isStatic = readOnly || (schema.readOnly !== undefined && schema.readOnly === true);
+
         if (schema.type === 'object') {
-            return React.createElement(widget(), {}, this.renderFields(schema, readOnly, context));
+            return React.createElement(widget,
+                {label: fieldLabel, context: context},
+                this.renderFields(schema, readOnly, context ? context + '.' : context));
         }
 
-        return React.createElement(widget());
+        return React.createElement(widget, {
+            schema: schema,
+            label: fieldLabel,
+            readOnly: isStatic,
+            required: required,
+            fieldContext: context,
+            defaultValue: schema.default,
+            description: schema.description
+        });
     }
 
     renderFields(schema: ObjectSchema,
                  readOnly: boolean,
                  context: string) {
-
         return Object.keys(schema.properties).map(key => {
             const fieldSchema = schema.properties[key];
             return this.renderField(
                 fieldSchema,
                 key,
                 readOnly,
-                context
+                context + key,
+                this.isRequired(schema, key)
             );
         });
+    }
+
+    isRequired(schema, field) {
+        if (!schema.required)
+            return false;
+        return schema.required.includes(field);
+    }
+
+    getWidget(schema) {
+        if (schema.widget) {
+            return this.mappings[schema.widget];
+        }
+
+        if (schema.format) {
+            return this.mappings[schema.format];
+        }
+
+        if (schema.enum) {
+            return this.mappings['choice'];
+        }
+
+        return this.mappings[schema.type];
     }
 }
 

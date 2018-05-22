@@ -1,13 +1,14 @@
 import React from 'react';
-import type {FormContainerProps} from "../../../type/FormTheme";
+import {ObjectFieldProps} from "../../../type/FormTheme";
 
-function _ObjectField(props: FormContainerProps) {
-    console.log(props);
+function _ObjectField(props: ObjectFieldProps) {
     return (
-        <React.Fragment>
-            <p>Object</p>
+        <fieldset>
+            {props.label && (
+                <legend>{props.label}</legend>
+            )}
             {props.children}
-        </React.Fragment>
+        </fieldset>
     )
 }
 
