@@ -4,14 +4,6 @@ import SchemaForm from "./form";
 class App extends Component {
 
   render() {
-      /*
-      array: {
-                  "type": "array",
-                  "items": {
-                      "type": "number"
-                  }
-              },
-       */
       const schema = {
           title: "Person",
           type: "object",
@@ -69,12 +61,19 @@ class App extends Component {
                           type: "string"
                       }
                   }
+              },
+              array: {
+                  "type": "array",
+                  "items": {
+                      "type": "number"
+                  }
               }
           },
           "required": ["textField", "numberField", "dateField", "dateTimeField", "timeField", "uriField", "emailField"]
       };
     return (
-        <SchemaForm schema={schema} onSubmit={(d) => console.log(d)} readOnly={false}/>
+        <SchemaForm schema={schema} onSubmit={(d) => console.log(d)} readOnly={false} onChange={d => console.log(d)}
+                    formData={{textField: "text data", newObject: {readOnlyField: "hey ho"}}}/>
     );
   }
 }
