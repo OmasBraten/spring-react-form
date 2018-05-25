@@ -2,7 +2,6 @@
 import React from 'react';
 import TypeMapping from "./TypeMapping";
 import FormTheme from "./FormTheme";
-import type {RenderFieldProps, RenderProps} from "../type/Renderer";
 import {ObjectSchema} from "../type/ObjectSchema";
 
 class Renderer {
@@ -33,10 +32,12 @@ class Renderer {
            formData: any,
            onSubmit: func,
            onChange: func): React.Element {
+        this._formData = JSON.parse(JSON.stringify(formData));
+        this._onChange = onChange;
         return React.createElement(
             this.mappings['form'],
             {onSubmit: onSubmit},
-            this.renderField(schema, '', readOnly, '')
+            this.renderField(schema, '', readOnly, '', false, this._formData)
         );
     }
 
@@ -44,7 +45,8 @@ class Renderer {
                 fieldName: string,
                 readOnly: boolean,
                 context: string,
-                required: boolean): ReactElement {
+                required: boolean,
+                data: any): ReactElement {
         const widget = this.getWidget(schema);
         if (!widget) {
             console.error(`No widget for type: ${schema.type}`);
@@ -57,7 +59,7 @@ class Renderer {
         if (schema.type === 'object') {
             return React.createElement(widget,
                 {label: fieldLabel, context: context},
-                this.renderFields(schema, readOnly, context ? context + '.' : context));
+                this.renderFields(schema, readOnly, context ? context + '.' : context, data));
         }
 
         return React.createElement(widget, {
@@ -67,21 +69,26 @@ class Renderer {
             required: required,
             fieldContext: context,
             defaultValue: schema.default,
-            description: schema.description
+            description: schema.description,
+            value: data,
+            onChange: d => this._onChange(context, d)
         });
     }
 
     renderFields(schema: ObjectSchema,
                  readOnly: boolean,
-                 context: string) {
+                 context: string,
+                 data: any) {
         return Object.keys(schema.properties).map(key => {
             const fieldSchema = schema.properties[key];
+            const fieldData = data && data[key] ? data[key] : undefined;
             return this.renderField(
                 fieldSchema,
                 key,
                 readOnly,
                 context + key,
-                this.isRequired(schema, key)
+                this.isRequired(schema, key),
+                fieldData
             );
         });
     }

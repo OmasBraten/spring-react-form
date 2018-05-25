@@ -2,15 +2,11 @@ import React from 'react';
 import FormWidget from "../../FormWidget";
 import type {BaseInputFieldProps} from "../../../type/FormTheme";
 
-class _BaseInputField extends FormWidget {
-    constructor(props: BaseInputFieldProps) {
-        super(props);
-    }
-
+class _BaseInputField extends FormWidget<BaseInputFieldProps> {
     getStatic() {
         return (
             <div key={this.props.fieldContext}>
-                <label>{this.props.label}</label>
+                <label>{this.props.label}:</label>
                 <br/>
                 <p>{this.props.value}</p>
             </div>
@@ -28,6 +24,7 @@ class _BaseInputField extends FormWidget {
                        type={this.props.type}
                        placeholder={this.props.defaultValue}
                        value={this.props.value}
+                       onChange={(e) => this.props.onChange(e.target.value)}
                 />
                 <br/>
                 {this.props.description && (

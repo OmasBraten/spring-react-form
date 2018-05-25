@@ -14,7 +14,6 @@ import {FieldProps, FormContainerProps} from "../../type/FormTheme";
 
 class _BasicTheme extends FormTheme {
     static formContainer(props: FormContainerProps) {
-        console.log(props);
         return <FormContainer {...props}/>
     }
 

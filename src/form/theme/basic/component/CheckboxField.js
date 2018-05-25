@@ -2,15 +2,11 @@ import React from 'react';
 import FormWidget from "../../FormWidget";
 import type {BaseInputFieldProps} from "../../../type/FormTheme";
 
-class _CheckboxField extends FormWidget {
-    constructor(props: BaseInputFieldProps) {
-        super(props);
-    }
-
+class _CheckboxField extends FormWidget<BaseInputFieldProps> {
     getStatic() {
         return (
             <div key={this.props.fieldContext}>
-                <label>{this.props.label}</label>
+                <label>{this.props.label}:</label>
                 <br/>
                 <p>{this.props.value}</p>
             </div>
@@ -26,6 +22,7 @@ class _CheckboxField extends FormWidget {
                        type={this.props.type}
                        placeholder={this.props.defaultValue}
                        value={this.props.value}
+                       onChange={(e) => this.props.onChange(e.target.checked)}
                 />
                 <label htmlFor={this.props.fieldContext}>{this.props.label}</label>
                 <br/>

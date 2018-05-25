@@ -4,7 +4,7 @@ import TypeMapping from "../theme/TypeMapping";
 export type Props = {
     schema: any,
     readOnly?: boolean,
-    formData: any,
+    formData?: any,
     onSubmit: (data: any) => void,
     onChange?: (data: any) => void,
     theme?: FormTheme,

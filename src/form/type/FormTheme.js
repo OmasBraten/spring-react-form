@@ -14,7 +14,9 @@ export type FieldProps = {
     required: boolean,
     fieldContext: string,
     label: string,
-    readOnly: boolean
+    readOnly: boolean,
+    value: any,
+    onChange: func
 }
 
 export type BaseInputFieldProps = {

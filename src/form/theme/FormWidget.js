@@ -1,7 +1,6 @@
 import React from 'react';
 
-class FormWidget extends React.Component {
-
+class FormWidget<R> extends React.Component<R> {
     getStatic() {
         return <p>STATIC</p>;
     }

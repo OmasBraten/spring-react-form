@@ -13,6 +13,7 @@ class SchemaForm extends React.Component<Props, State> {
     };
     state = {
         validSchema: true,
+        formData: {}
     };
 
     constructor(props) {
@@ -20,6 +21,10 @@ class SchemaForm extends React.Component<Props, State> {
 
         this.renderer = new Renderer(props.theme, props.mappings);
         this.ajv = new Ajv();
+        this.onSubmit = this.onSubmit.bind(this);
+        this.onChange = this.onChange.bind(this);
+
+        this.state.formData = props.formData;
     }
 
     componentWillMount() {
@@ -44,6 +49,7 @@ class SchemaForm extends React.Component<Props, State> {
 
         if (nextProps.formData !== this.props.formData) {
             this.validateData(nextProps.formData)
+            this.setState({formData: nextProps.formData})
         }
     }
 
@@ -74,13 +80,35 @@ class SchemaForm extends React.Component<Props, State> {
         this.props.onSubmit({});
     }
 
+    onChange(context, data): void {
+        this.setState({formData: this.setData(context, data, this.state.formData)}, () => {
+            if (this.props.onChange)
+                this.props.onChange(this.state.formData)
+        });
+    }
+
+    setData(context, data, formData) {
+        const path = context.split('.').filter(x => x !== "");
+        let currentData = formData;
+        for (let i = 0; i < path.length; i++) {
+            if (!currentData[path[i]]) {
+                currentData[path[i]] = undefined;
+            }
+            if (i === path.length - 1) {
+                currentData[path[i]] = data;
+            }
+            currentData = currentData[path[i]];
+        }
+        return formData;
+    }
+
     render() {
         //TODO: add prop if in static mode empty fields are rendered or not also for readonly fields in non editing mode
-        const {schema, readOnly, formData, onSubmit, onChange} = this.props;
+        const {schema, readOnly} = this.props;
         if (!this.state.validSchema)
             return (<p>The scheme is not valid!</p>);
         return (
-            this.renderer.render(schema, readOnly, formData, onSubmit, onChange)
+            this.renderer.render(schema, readOnly, this.state.formData, this.onSubmit, this.onChange)
         )
     }
 }
