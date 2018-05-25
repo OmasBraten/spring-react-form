@@ -1,4 +1,3 @@
-import React from 'react';
 import FormWidget from "./FormWidget";
 import {FieldProps, FormContainerProps} from "../type/FormTheme";
 

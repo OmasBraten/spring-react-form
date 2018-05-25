@@ -1,4 +1,3 @@
-import React from 'react';
 import FormTheme from "../FormTheme";
 
 class _Bootstrap3Theme extends FormTheme {
